@@ -4,35 +4,50 @@
 #include "Car.h"
 #include <deque>
 #include <ctime>
+#include <array>
 #include <cstdlib>
 #include <iostream>
 
 using namespace std;
 
 // global constant declarations
-const int INITIAL_NUM_CARS = 2;
-const double CAR_PAY_PROBABILITY = 55.0;
-const double CAR_JOIN_PROBABILITY = 45.0;
+const double CAR_PAY_PROBABILITY = 46.0;
+const double CAR_JOIN_PROBABILITY = 39.0;
+const double CAR_SWITCH_PROBABILITY = 15.0;
+const int INITIAL_NUM_CARS_MIN = 1;
+const int INITIAL_NUM_CARS_MAX = 3;
+const int NUM_LANES = 4;
+const int NUM_SIMULATIONS = 20;
 
 
 int main() {
     srand(time(0));    // seed time for random
 
     // Initialize a deque structure of Cars
-    deque<Car> tollBoothLane;
+    array<deque<Car>, NUM_LANES> tollBoothLane;
 
-    // Initialize the deque with the amount of initiaul number of cars
-    for (int i = 0; i < INITIAL_NUM_CARS; i++)
+    // Initialize the array with the amount of initial number of cars in each lane
+    for(int i = 0; i < NUM_LANES; i++)
     {
-        tollBoothLane.push_back(Car());
+        int initialCars = rand() % (INITIAL_NUM_CARS_MAX - INITIAL_NUM_CARS_MIN + 1) + INITIAL_NUM_CARS_MIN;
+        for(int j = 0; j < initialCars; j++)
+        {
+            tollBoothLane[i].push_back(Car());
+        }   
     }
 
+    // Print initial car queue
     cout << "Initial Queue:\n";
-    for (auto& carInitial : tollBoothLane)
+    for(int k = 0; k < NUM_LANES; k++)
     {
-        cout << setw(5) << "";
-        carInitial.print();
+        cout << "Lane " << (k + 1) << ":\n";
+        for(auto& carInitial : tollBoothLane[k])
+        {
+            cout << setw(5) << "";
+            carInitial.print();
+        }
     }
+    
     
     // time intervals
     int time = 1;
