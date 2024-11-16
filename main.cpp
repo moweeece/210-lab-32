@@ -11,8 +11,8 @@ using namespace std;
 
 // global constant declarations
 const int INITIAL_NUM_CARS = 2;
-const double CAR_PAY_PROBABILITY = 55;
-const double CAR_JOIN_PROBABILITY = 45;
+const double CAR_PAY_PROBABILITY = 55.0;
+const double CAR_JOIN_PROBABILITY = 45.0;
 
 
 int main() {
@@ -28,10 +28,10 @@ int main() {
     }
 
     cout << "Initial Queue:\n";
-    for (auto& car : tollBoothLane)
+    for (auto& carInitial : tollBoothLane)
     {
         cout << setw(5) << "";
-        car.print();
+        carInitial.print();
     }
     
     // time intervals
