@@ -50,50 +50,67 @@ int main() {
     
     
     // time intervals
-    int time = 1;
-
-    // run while the deque is not empty
-    while (!tollBoothLane.empty())
+    for(int time = 1; time <= NUM_SIMULATIONS; time++)
     {
-        double randProb = rand() % 100;
+        cout << "\nTime: " << time << endl;
 
-        cout << "Time: " << time << " Operation: ";
+        for (int lane = 0; lane < NUM_LANES; lane++)
+        {
+            double randProb = rand() % 100;
 
-        // if the probably is higher than 55% (car pays) and the deque is not empty
-        if (randProb < CAR_PAY_PROBABILITY && !tollBoothLane.empty())
-        {
-            cout << "Car Paid: ";
-            // output the front car
-            tollBoothLane.front().print();
-            // remove the front car from the deque
-            tollBoothLane.pop_front();
-        }
-        else // new car joins the line
-        {
-            Car newCar;
-            cout << "Joined lane: ";
-            newCar.print();
-            // add the new car to the back of the line
-            tollBoothLane.push_back(newCar);
-        }
-
-        cout << "Queue:" << endl;
-        // if the deque is empty
-        if (tollBoothLane.empty())
-        {
-            cout << setw(5) << "";
-            cout << "Empty" << endl;
-        }
-        else  // if the deuque is not empty
-        {
-            for (auto& carOutput : tollBoothLane)
+            // if the probably is higher than 55% (car pays) and the array is not empty
+            if (randProb < CAR_PAY_PROBABILITY && !tollBoothLane[lane].empty())
             {
-                cout << setw(5) << "";
-                carOutput.print();
+                cout << "Lane " << (lane + 1) << " Paid: ";
+                // output the front car
+                tollBoothLane[lane].front().print();
+                // remove the front car from the deque
+                tollBoothLane[lane].pop_front();
             }
+            // new car joins
+            else if (randProb < CAR_PAY_PROBABILITY + CAR_JOIN_PROBABILITY)
+            {
+                Car newCar;
+                cout << "Lane " << (lane + 1) << " Joined: ";
+                newCar.print();
+                // add the new car to the back of the line
+                tollBoothLane[lane].push_back(newCar);
+            }
+            // rear car switches
+            else if (randProb < CAR_PAY_PROBABILITY + CAR_JOIN_PROBABILITY + CAR_SWITCH_PROBABILITY && !tollBoothLane[lane].empty())
+            {
+                // variable to determine which lane to switch to
+                int switchlane;
+
+
+
+            }
+
+
         }
 
-        time++;
+
+
+
+            for(int l = 0; l < NUM_LANES; l++)
+            {
+                cout << "Lane " << (l + 1) << "Queue\n";
+                // if the array is empty
+                if (tollBoothLane[l].empty())
+                {
+                    cout << setw(5) << "";
+                    cout << "Empty" << endl;
+                }
+                else  // if the array is not empty
+                {
+                    for (auto& carOutput : tollBoothLane[l])
+                    {
+                        cout << setw(5) << "";
+                        carOutput.print();
+                    }
+                }
+
+            }
     }
 
     return 0;
